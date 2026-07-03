@@ -34,6 +34,14 @@ Want the m8c v2.x beta (SDL3, in-app config UI) too?
 ssh root@<device-ip> 'curl -fsSL https://raw.githubusercontent.com/seajaysec/panicos-setup/master/setup.sh | M8C_BETA=1 sh'
 ```
 
+And the everything button — music machine **plus** the full emulation stack
+([panicos-emu](https://github.com/seajaysec/panicos-emu): ROCKNIX RetroArch,
+every core, self-updating from the Ports menu):
+
+```sh
+ssh root@<device-ip> 'curl -fsSL https://raw.githubusercontent.com/seajaysec/panicos-setup/master/setup.sh | EMU=1 M8C_BETA=1 sh'
+```
+
 Safe to re-run — it updates in place and never touches your configs or
 scripts. When it finishes, **Norns** and **M8C** are in Ports and
 **USB Audio** is in Tools.

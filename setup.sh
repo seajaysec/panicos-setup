@@ -9,6 +9,11 @@
 #   2. m8c          — Dirtywave M8 client (Ports > M8C); M8C_BETA=1 adds the SDL3 beta
 #   3. usb-audio    — system-wide USB in/out toggles (Tools > USB Audio)
 #   4. warp_pipe    — norns mod: USB audio into the norns graph (pre-enabled)
+#
+# EMU=1 also installs the full emulation stack (panicos-emu: ROCKNIX
+# RetroArch + every core, self-updating via Ports > "Update Emulators").
+# The whole handheld in one command:
+#   ... | EMU=1 M8C_BETA=1 sh
 set -e
 
 NORNS_ZIP="https://github.com/seajaysec/norns-panicos/releases/download/v0.2.0-rc1/norns-panicos.zip"
@@ -59,6 +64,11 @@ if [ ! -f "$MODS" ]; then
     echo "   pre-enabled (SYSTEM > MODS)"
 elif ! grep -q warp_pipe "$MODS"; then
     echo "   NOTE: enable warp_pipe manually in norns SYSTEM > MODS (won't edit your existing mods file)"
+fi
+
+if [ "${EMU:-0}" = 1 ]; then
+    echo "== [bonus] emulators (panicos-emu, all ROCKNIX cores) =="
+    curl -fsSL https://raw.githubusercontent.com/seajaysec/panicos-emu/master/bootstrap.sh | bash -s -- --all-cores
 fi
 
 systemctl restart panicos-es.service 2>/dev/null || true
