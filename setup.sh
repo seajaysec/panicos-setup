@@ -28,10 +28,10 @@ rm -f /tmp/norns-panicos.zip
 echo "   norns installed"
 
 echo "== [2/4] m8c =="
-curl -fSL "$M8C_TGZ" | tar xz -C "$PORTS"
+curl -fSL "$M8C_TGZ" | gunzip -c | tar xf - -C "$PORTS"   # busybox tar has no -z
 chmod +x "$PORTS/M8C.sh" "$PORTS/m8c/m8c"
 if [ "${M8C_BETA:-0}" = 1 ]; then
-    curl -fSL "$M8C_BETA_TGZ" | tar xz -C "$PORTS"
+    curl -fSL "$M8C_BETA_TGZ" | gunzip -c | tar xf - -C "$PORTS"
     chmod +x "$PORTS/M8C-Beta.sh" "$PORTS/m8c-beta/m8c"
     echo "   m8c installed (stable + beta)"
 else
@@ -40,7 +40,7 @@ fi
 
 echo "== [3/4] usb-audio =="
 rm -rf /tmp/ua && mkdir -p /tmp/ua
-curl -fSL "$USBAUDIO_TGZ" | tar xz -C /tmp/ua
+curl -fSL "$USBAUDIO_TGZ" | gunzip -c | tar xf - -C /tmp/ua
 sh /tmp/ua/install.sh
 rm -rf /tmp/ua
 
